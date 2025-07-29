@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spam Detection Pro</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
+        .container { max-width: 700px; margin: auto; background: white; padding: 30px; border-radius: 10px; }
+        textarea { width: 100%; padding: 10px; font-size: 16px; }
+        input[type="submit"] { padding: 10px 20px; font-size: 16px; margin-top: 10px; }
+        .result { margin-top: 20px; font-size: 20px; font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+        th { background-color: #eee; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Spam Detection Web App</h2>
+        <form method="post">
+            <textarea name="message" rows="5" placeholder="Enter your message here...">{{ message }}</textarea><br>
+            <input type="submit" value="Check Spam">
+        </form>
+
+        {% if result %}
+            <div class="result">
+                Prediction: <span style="color:{{ 'red' if result == 'SPAM' else 'green' }}">{{ result }}</span>
+                (Confidence: {{ confidence }}%)
+            </div>
+        {% endif %}
+
+        {% if history %}
+            <h3>History</h3>
+            <table>
+                <tr><th>Message</th><th>Result</th><th>Confidence</th></tr>
+                {% for item in history %}
+                <tr>
+                    <td>{{ item.text }}</td>
+                    <td>{{ item.result }}</td>
+                    <td>{{ item.confidence }}%</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+</body>
+</html>
